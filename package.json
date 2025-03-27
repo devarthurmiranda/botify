@@ -1,0 +1,20 @@
+{
+  "name": "botify",
+  "version": "1.0.0",
+  "description": "Techify discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "bot",
+    "discord"
+  ],
+  "author": "Arthur Miranda",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.1.9"
+  }
+}
