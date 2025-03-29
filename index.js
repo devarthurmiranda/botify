@@ -13,7 +13,7 @@ if (!token) {
 
 
 // Cria uma nova instância do cliente
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages] });
 
 // Quando o cliente estiver pronto, execute este código (apenas uma vez)
 client.once(Events.ClientReady, readyClient => {
@@ -45,6 +45,7 @@ for (const folder of commandFolders) {
 	}
 }
 
+// Evento de criação de comandos
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 
@@ -65,4 +66,26 @@ client.on(Events.InteractionCreate, async interaction => {
 			await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
 		}
 	}
+});
+
+
+client.on("guildMemberAdd", async (member) => {
+    const guild = member.guild;
+    
+    // Send welcome message
+    const channel = guild.channels.cache.get("1354514183223509146"); // Welcome channel ID
+    if (channel) {
+        channel.send(`Seja bem-vindo(a) à comunidade Techify, ${member}!`);
+    }
+
+    // Assign role
+    const role = guild.roles.cache.get("1355242578076762145"); // Role ID
+    if (role) {
+        try {
+            await member.roles.add(role);
+            console.log(`Role ${role.name} assigned to ${member.user.tag}`);
+        } catch (error) {
+            console.error(`Failed to assign role: ${error}`);
+        }
+    }
 });
